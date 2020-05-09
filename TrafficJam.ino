@@ -30,23 +30,72 @@ void setup() {
   digitalWrite(REL_RED, relRedState);
   digitalWrite(REL_YEL, relYelState);
   digitalWrite(REL_GRN, relGrnState);
+
+//startup - traffic lights
+  digitalWrite (REL_RED, HIGH);
+  delay (500);
+  digitalWrite (REL_RED, LOW);
+ // delay (100);
+
+  digitalWrite (REL_YEL, HIGH);
+  delay (500);
+  digitalWrite (REL_YEL, LOW);
+  //delay (100);
+
+  digitalWrite (REL_GRN, HIGH);
+  delay (500);
+  digitalWrite (REL_GRN, LOW);
+//  delay (100);
+
+  digitalWrite (REL_RED, HIGH);
+  digitalWrite (REL_YEL, HIGH);
+  digitalWrite (REL_GRN, HIGH);
+  delay (500);
+  digitalWrite (REL_RED, LOW);
+  digitalWrite (REL_YEL, LOW);
+  digitalWrite (REL_GRN, LOW);
+  delay (100);
+
+//startup button leds
+  digitalWrite (LED_RED, HIGH);
+  delay (500);
+  digitalWrite (LED_RED, LOW);
+ // delay (100);
+
+  digitalWrite (LED_YEL, HIGH);
+  delay (500);
+  digitalWrite (LED_YEL, LOW);
+  //delay (100);
+
+  digitalWrite (LED_GRN, HIGH);
+  delay (500);
+  digitalWrite (LED_GRN, LOW);
+//  delay (100);
+
+  digitalWrite (LED_RED, HIGH);
+  digitalWrite (LED_YEL, HIGH);
+  digitalWrite (LED_GRN, HIGH);
+  delay (500);
+  digitalWrite (LED_RED, LOW);
+  digitalWrite (LED_YEL, LOW);
+  digitalWrite (LED_GRN, LOW);
 }
 
 // the loop function runs over and over again forever
 void loop() {
-  
-  if(digitalRead(BUTT_RED) == 1){
+
+  if (digitalRead(BUTT_RED) == 1) {
     relRedState = digitalRead(REL_RED);
   }
 
-    if(digitalRead(BUTT_YEL) == 1){
+  if (digitalRead(BUTT_YEL) == 1) {
     relYelState = digitalRead(REL_YEL);
   }
 
-    if(digitalRead(BUTT_GRN) == 1) {
+  if (digitalRead(BUTT_GRN) == 1) {
     relGrnState = digitalRead(REL_GRN);
   }
-  
+
   if (digitalRead(BUTT_RED) == 0) {
     digitalWrite(LED_RED, HIGH);
     digitalWrite(REL_RED, !relRedState);
@@ -54,7 +103,7 @@ void loop() {
   }
   else {
     digitalWrite(LED_RED, LOW);
-   // digitalWrite(REL_RED, LOW);
+    // digitalWrite(REL_RED, LOW);
   }
 
   if (digitalRead(BUTT_YEL) == 0) {
@@ -64,7 +113,7 @@ void loop() {
   }
   else {
     digitalWrite(LED_YEL, LOW);
-   // digitalWrite (REL_YEL, LOW);
+    // digitalWrite (REL_YEL, LOW);
   }
 
   if (digitalRead(BUTT_GRN) == 0) {
@@ -74,11 +123,11 @@ void loop() {
   }
   else {
     digitalWrite(LED_GRN, LOW);
-  //  digitalWrite (REL_GRN, LOW);
-  
+    //  digitalWrite (REL_GRN, LOW);
+
   }
-//  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-//  delay(500);                       // wait for 0.5 seconds
-//  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-//  delay(500);                       // wait for 0.5 seconds
+  //  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+  //  delay(500);                       // wait for 0.5 seconds
+  //  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+  //  delay(500);                       // wait for 0.5 seconds
 }
