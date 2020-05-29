@@ -52,6 +52,10 @@ void loop() {
   //   relGrnState = digitalRead(REL_GRN);
   // }
 
+  //First, load this code and see if it behaves the same
+  //Then, make it so if the red button is pressed, testSeq happens.
+  // Keep LED_RED on while testSeq is going, turn it off when the sequence is done.
+
   if (digitalRead(BUTT_RED) == 0) {
     digitalWrite(LED_RED, HIGH);
     digitalWrite(REL_RED, !relRedState);
@@ -86,6 +90,10 @@ void loop() {
   //  delay(500);                       // wait for 0.5 seconds
   //  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
   //  delay(500);                       // wait for 0.5 seconds
+}
+
+void testSeq (void) {
+  // write a sequence of 4 blinks, using all colors, in any order
 }
 
 void startSequence (void) {
