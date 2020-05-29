@@ -31,54 +31,8 @@ void setup() {
   digitalWrite(REL_YEL, relYelState);
   digitalWrite(REL_GRN, relGrnState);
 
-//startup - traffic lights
-  digitalWrite (REL_RED, HIGH);
-  delay (500);
-  digitalWrite (REL_RED, LOW);
- // delay (100);
+  startSequence();
 
-  digitalWrite (REL_YEL, HIGH);
-  delay (500);
-  digitalWrite (REL_YEL, LOW);
-  //delay (100);
-
-  digitalWrite (REL_GRN, HIGH);
-  delay (500);
-  digitalWrite (REL_GRN, LOW);
-//  delay (100);
-
-  digitalWrite (REL_RED, HIGH);
-  digitalWrite (REL_YEL, HIGH);
-  digitalWrite (REL_GRN, HIGH);
-  delay (500);
-  digitalWrite (REL_RED, LOW);
-  digitalWrite (REL_YEL, LOW);
-  digitalWrite (REL_GRN, LOW);
-  delay (100);
-
-//startup button leds
-  digitalWrite (LED_RED, HIGH);
-  delay (500);
-  digitalWrite (LED_RED, LOW);
- // delay (100);
-
-  digitalWrite (LED_YEL, HIGH);
-  delay (500);
-  digitalWrite (LED_YEL, LOW);
-  //delay (100);
-
-  digitalWrite (LED_GRN, HIGH);
-  delay (500);
-  digitalWrite (LED_GRN, LOW);
-//  delay (100);
-
-  digitalWrite (LED_RED, HIGH);
-  digitalWrite (LED_YEL, HIGH);
-  digitalWrite (LED_GRN, HIGH);
-  delay (500);
-  digitalWrite (LED_RED, LOW);
-  digitalWrite (LED_YEL, LOW);
-  digitalWrite (LED_GRN, LOW);
 }
 
 // the loop function runs over and over again forever
@@ -130,4 +84,57 @@ void loop() {
   //  delay(500);                       // wait for 0.5 seconds
   //  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
   //  delay(500);                       // wait for 0.5 seconds
+}
+
+void startSequence (void) {
+  //startup - traffic lights
+
+    digitalWrite (REL_RED, HIGH);
+    delay (500);
+    digitalWrite (REL_RED, LOW);
+   // delay (100);
+
+    digitalWrite (REL_YEL, HIGH);
+    delay (500);
+    digitalWrite (REL_YEL, LOW);
+    //delay (100);
+
+    digitalWrite (REL_GRN, HIGH);
+    delay (500);
+    digitalWrite (REL_GRN, LOW);
+  //  delay (100);
+
+    digitalWrite (REL_RED, HIGH);
+    digitalWrite (REL_YEL, HIGH);
+    digitalWrite (REL_GRN, HIGH);
+    delay (500);
+    digitalWrite (REL_RED, LOW);
+    digitalWrite (REL_YEL, LOW);
+    digitalWrite (REL_GRN, LOW);
+    delay (100);
+
+
+  //startup button leds
+    digitalWrite (LED_RED, HIGH);
+    delay (500);
+    digitalWrite (LED_RED, LOW);
+   // delay (100);
+
+    digitalWrite (LED_YEL, HIGH);
+    delay (500);
+    digitalWrite (LED_YEL, LOW);
+    //delay (100);
+
+    digitalWrite (LED_GRN, HIGH);
+    delay (500);
+    digitalWrite (LED_GRN, LOW);
+  //  delay (100);
+
+    digitalWrite (LED_RED, HIGH);
+    digitalWrite (LED_YEL, HIGH);
+    digitalWrite (LED_GRN, HIGH);
+    delay (500);
+    digitalWrite (LED_RED, LOW);
+    digitalWrite (LED_YEL, LOW);
+    digitalWrite (LED_GRN, LOW);
 }
