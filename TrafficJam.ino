@@ -38,17 +38,19 @@ void setup() {
 // the loop function runs over and over again forever
 void loop() {
 
-  if (digitalRead(BUTT_RED) == 1) {
-    relRedState = digitalRead(REL_RED);
-  }
-
-  if (digitalRead(BUTT_YEL) == 1) {
-    relYelState = digitalRead(REL_YEL);
-  }
-
-  if (digitalRead(BUTT_GRN) == 1) {
-    relGrnState = digitalRead(REL_GRN);
-  }
+// I don't think this section was doing anything?  REL pins are outputs, so reading them
+// generally doesn't have an effect.
+  // if (digitalRead(BUTT_RED) == 1) {
+  //   relRedState = digitalRead(REL_RED);
+  // }
+  //
+  // if (digitalRead(BUTT_YEL) == 1) {
+  //   relYelState = digitalRead(REL_YEL);
+  // }
+  //
+  // if (digitalRead(BUTT_GRN) == 1) {
+  //   relGrnState = digitalRead(REL_GRN);
+  // }
 
   if (digitalRead(BUTT_RED) == 0) {
     digitalWrite(LED_RED, HIGH);
