@@ -99,13 +99,14 @@ void gameSeq (void) {
 void onSequence (void) {
   //startup - traffic lights
 
+delay (1000);
 digitalWrite (REL_RED, HIGH);
 digitalWrite (REL_YEL, HIGH);
 digitalWrite (REL_GRN, HIGH);
 digitalWrite (LED_RED, HIGH);
 digitalWrite (LED_YEL, HIGH);
 digitalWrite (LED_GRN, HIGH);
-delay (500)
+delay (1000);
 digitalWrite (REL_RED, LOW);
 digitalWrite (REL_YEL, LOW);
 digitalWrite (REL_GRN, LOW);
