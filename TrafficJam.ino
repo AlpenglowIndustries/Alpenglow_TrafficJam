@@ -113,6 +113,7 @@ digitalWrite (REL_GRN, LOW);
 digitalWrite (LED_RED, LOW);
 digitalWrite (LED_YEL, LOW);
 digitalWrite (LED_GRN, LOW);
+delay (1000);
 }
 
 
