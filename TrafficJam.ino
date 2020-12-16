@@ -33,137 +33,66 @@ void setup() {
 
   onSequence();
 
+  Serial.begin(9600);
+
 }
 
 // the loop function runs over and over again forever
+// buttons = 0 when they are pressed
+// leds and lights = 1 when they are lit
 void loop() {
 
-// I don't think this section was doing anything?  REL pins are outputs, so reading them
-// generally doesn't have an effect.
-  if (digitalRead(BUTT_RED) == 1) {
-    relRedState = digitalRead(REL_RED);
+  int startGame = 0;
+  int gameOn = 0;
+  startGame = digitalRead(BUTT_RED) + digitalRead(BUTT_GRN) + digitalRead(BUTT_YEL);
+  if (startGame < 3) gameOn = 1;
+
+  int stopGame = 0;
+
+  while (gameOn) {
+    onSequence();
+    stopGame = digitalRead(BUTT_RED) + digitalRead(BUTT_GRN) + digitalRead(BUTT_YEL);
+    Serial.println(stopGame);
+    if (stopGame < 3) gameOn = 0;
+    if (!gameOn) gameOverSeq();
   }
 
-  if (digitalRead(BUTT_YEL) == 1) {
-    relYelState = digitalRead(REL_YEL);
-  }
+  delay (100);
 
-  if (digitalRead(BUTT_GRN) == 1) {
-    relGrnState = digitalRead(REL_GRN);
-  }
-
-  //First, load this code and see if it behaves the same
-  //Then, make it so if the red button is pressed, testSeq happens.
-  // Keep LED_RED on while testSeq is going, turn it off when the sequence is done.
-
-  if (digitalRead(BUTT_RED) == 0) {
-    digitalWrite(LED_RED, HIGH);
-    digitalWrite(REL_RED, !relRedState);
-    delay(50);
-  }
-  else {
-    digitalWrite(LED_RED, LOW);
-    // digitalWrite(REL_RED, LOW);
-  }
-
-  if (digitalRead(BUTT_YEL) == 0) {
-    digitalWrite(LED_YEL, HIGH);
-    digitalWrite(REL_YEL, !relYelState);
-    delay(50);
-  }
-  else {
-    digitalWrite(LED_YEL, LOW);
-    // digitalWrite (REL_YEL, LOW);
-  }
-
-  if (digitalRead(BUTT_GRN) == 0) {
-    digitalWrite(LED_GRN, HIGH);
-    digitalWrite(REL_GRN, !relGrnState);
-    delay(50);
-  }
-  else {
-    digitalWrite(LED_GRN, LOW);
-    //  digitalWrite (REL_GRN, LOW);
-
-  }
-  //  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  //  delay(500);                       // wait for 0.5 seconds
-  //  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-  //  delay(500);                       // wait for 0.5 seconds
 }
 
-void gameSeq (void) {
+void gameSeq(void) {
   // write a sequence of 4 blinks, using all colors, in any order
 }
 
-void onSequence (void) {
+void onSequence(void) {
   //startup - traffic lights
 
-delay (1000);
-digitalWrite (REL_RED, HIGH);
-digitalWrite (REL_YEL, HIGH);
-digitalWrite (REL_GRN, HIGH);
-digitalWrite (LED_RED, HIGH);
-digitalWrite (LED_YEL, HIGH);
-digitalWrite (LED_GRN, HIGH);
-delay (1000);
-digitalWrite (REL_RED, LOW);
-digitalWrite (REL_YEL, LOW);
-digitalWrite (REL_GRN, LOW);
-digitalWrite (LED_RED, LOW);
-digitalWrite (LED_YEL, LOW);
-digitalWrite (LED_GRN, LOW);
-delay (1000);
+  delay (1000);
+  digitalWrite (REL_RED, HIGH);
+  digitalWrite (REL_YEL, HIGH);
+  digitalWrite (REL_GRN, HIGH);
+  digitalWrite (LED_RED, HIGH);
+  digitalWrite (LED_YEL, HIGH);
+  digitalWrite (LED_GRN, HIGH);
+  delay (1000);
+  digitalWrite (REL_RED, LOW);
+  digitalWrite (REL_YEL, LOW);
+  digitalWrite (REL_GRN, LOW);
+  digitalWrite (LED_RED, LOW);
+  digitalWrite (LED_YEL, LOW);
+  digitalWrite (LED_GRN, LOW);
+  delay (1000);
 }
 
-
-
-//     digitalWrite (REL_RED, HIGH);
-//     delay (500);
-//     digitalWrite (REL_RED, LOW);
-//    // delay (100);
-//
-//     digitalWrite (REL_YEL, HIGH);
-//     delay (500);
-//     digitalWrite (REL_YEL, LOW);
-//     //delay (100);
-//
-//     digitalWrite (REL_GRN, HIGH);
-//     delay (500);
-//     digitalWrite (REL_GRN, LOW);
-//   //  delay (100);
-//
-//     digitalWrite (REL_RED, HIGH);
-//     digitalWrite (REL_YEL, HIGH);
-//     digitalWrite (REL_GRN, HIGH);
-//     delay (500);
-//     digitalWrite (REL_RED, LOW);
-//     digitalWrite (REL_YEL, LOW);
-//     digitalWrite (REL_GRN, LOW);
-//     delay (100);
-//
-//
-//   //startup button leds
-//     digitalWrite (LED_RED, HIGH);
-//     delay (500);
-//     digitalWrite (LED_RED, LOW);
-//    // delay (100);
-//
-//     digitalWrite (LED_YEL, HIGH);
-//     delay (500);
-//     digitalWrite (LED_YEL, LOW);
-//     //delay (100);
-//
-//     digitalWrite (LED_GRN, HIGH);
-//     delay (500);
-//     digitalWrite (LED_GRN, LOW);
-//   //  delay (100);
-//
-//     digitalWrite (LED_RED, HIGH);
-//     digitalWrite (LED_YEL, HIGH);
-//     digitalWrite (LED_GRN, HIGH);
-//     delay (500);
-//     digitalWrite (LED_RED, LOW);
-//     digitalWrite (LED_YEL, LOW);
-//     digitalWrite (LED_GRN, LOW);
-// }
+void gameOverSeq(void) {
+  digitalWrite (REL_RED, HIGH);
+  delay (500);
+  digitalWrite (REL_YEL, HIGH);
+  delay (500);
+  digitalWrite (REL_GRN, HIGH);
+  delay (3000);
+  digitalWrite (REL_RED, LOW);
+  digitalWrite (REL_GRN, LOW);
+  digitalWrite (REL_YEL, LOW);
+}
