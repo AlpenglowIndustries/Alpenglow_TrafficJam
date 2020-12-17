@@ -54,11 +54,9 @@ void loop() {
   int stopGame = 0;
 
   while (gameOn) {
-    blinkLights(red);
-    blinkLights(yel);
-    blinkLights(grn);
+    int gameSeq = generateSeq();
+    blinkLights(gameSeq);
     stopGame = digitalRead(BUTT_RED) + digitalRead(BUTT_GRN) + digitalRead(BUTT_YEL);
-    Serial.println(stopGame);
     if (stopGame < 3) gameOn = 0;
     if (!gameOn) gameOverSeq();
   }
@@ -67,9 +65,9 @@ void loop() {
 
 }
 
-void gameSeq() {
+int generateSeq(void) {
 
-
+  return red;
   // write a sequence of 4 blinks, using all colors, in any order
 }
 
@@ -106,6 +104,7 @@ void gameOverSeq(void) {
 }
 
 void blinkLights(int color) {
+  delay(500);
   if (color == red){
     digitalWrite (LED_RED, HIGH);
     digitalWrite (REL_RED, HIGH);
