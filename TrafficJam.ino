@@ -10,6 +10,10 @@
 #define REL_YEL 6
 #define REL_GRN 5
 
+#define WON 1
+#define LOST 0
+
+
 int red = BUTT_RED;
 int yel = BUTT_YEL;
 int grn = BUTT_GRN;
@@ -17,6 +21,8 @@ int grn = BUTT_GRN;
 int relRedState = LOW;         // the current state of the output pin
 int relYelState = LOW;         // the current state of the output pin
 int relGrnState = LOW;         // the current state of the output pin
+
+int ltime = 500;               // initial time lights are on and off
 
 // the setup function runs once when you press reset or power the board
 void setup() {
@@ -55,27 +61,60 @@ void loop() {
 
   // The whole game!  As long as you're stilling playing, this loops
   while (gameOn) {
-    int gameSeq = generateSeq();      // generates the blinking light sequency
-    blinkLights(gameSeq);             // blinks the lights in sequence
+    int gameSeq[] = {red, yel, grn, yel, red};          // generates the blinking light sequency
+    int lenGameSeq = sizeof(gameSeq) / sizeof(gameSeq[0]);
+    blinkLights(gameSeq, lenGameSeq);    // blinks the lights in sequence
 
-    int buttonPushed = 0;
-    long startTime = millis();
-    while ( (millis() - startTime < 3000) && (buttonPushed == 0) ) {
-      buttonPushed = checkButt();     // waits for button press, gives the player 3 seconds
-    }
+    int gameResult = WON;
 
-    if (buttonPushed == gameSeq){     // indicates you won the game
-      gameWonSeq();
+    int i = 0;
+    for (i = 0; i < lenGameSeq; i++) {
+      int buttonPushed = 0;
+      long startTime = millis();
+      while ( (millis() - startTime < 3000) && (buttonPushed == 0) ) {
+        buttonPushed = checkButt();     // waits for button press, gives the player 3 seconds
+      }
+      illuminate(buttonPushed);
+      // Serial.print("button pushed = ");
+      // Serial.println(buttonPushed);
+      // Serial.print("color seq = ");
+      // Serial.println(gameSeq[i]);
+      if (buttonPushed == gameSeq[i]) {
+        delay (500);
+          // if the correct button was pushed do nothing, continue checking buttons
+      }
+      else {
+        // catches both wrong button press or no button pressed & timeout
+        gameResult = LOST;
+        break;
+      }
+
     }
-    else {                            // indicates you lost the game
-      gameLostSeq();                  // catches both wrong button press or no button pressed & timeout
-    }
+    if (gameResult == WON) gameWonSeq();
+    else gameLostSeq();
 
     gameOn = 0;
-
   }
 
   delay (100);
+}
+
+void illuminate(int color) {
+  if (color == red){
+    digitalWrite(REL_RED, HIGH);
+    delay (300);
+    digitalWrite(REL_RED, LOW);
+  }
+  if (color == grn){
+    digitalWrite(REL_GRN, HIGH);
+    delay (300);
+    digitalWrite(REL_GRN, LOW);
+  }
+  if (color == yel){
+    digitalWrite(REL_YEL, HIGH);
+    delay (300);
+    digitalWrite(REL_YEL, LOW);
+    }
 }
 
 int checkButt() {
@@ -86,7 +125,6 @@ int checkButt() {
 }
 
 int generateSeq(void) {
-
   return red;
   // write a sequence of 4 blinks, using all colors, in any order
 }
@@ -137,30 +175,61 @@ void gameWonSeq(void) {
   }
 }
 
-void blinkLights(int color) {
+void blinkLights(int colorSeq[], int lenColorSeq) {
   delay(500);
-  if (color == red){
-    digitalWrite (LED_RED, HIGH);
-    digitalWrite (REL_RED, HIGH);
-    delay(500);
-    digitalWrite (LED_RED, LOW);
-    digitalWrite (REL_RED, LOW);
-    delay(500);
-  }
-  if (color == yel){
-    digitalWrite (LED_YEL, HIGH);
-    digitalWrite (REL_YEL, HIGH);
-    delay(500);
-    digitalWrite (LED_YEL, LOW);
-    digitalWrite (REL_YEL, LOW);
-    delay(500);
-  }
-  if (color == grn){
-    digitalWrite (LED_GRN, HIGH);
-    digitalWrite (REL_GRN, HIGH);
-    delay(500);
-    digitalWrite (LED_GRN, LOW);
-    digitalWrite (REL_GRN, LOW);
-    delay(500);
+  int i = 0;
+  for (i = 0; i < lenColorSeq; i++) {
+    if (colorSeq[i] == red){
+      digitalWrite (LED_RED, HIGH);
+      digitalWrite (REL_RED, HIGH);
+      delay(ltime);
+      digitalWrite (LED_RED, LOW);
+      digitalWrite (REL_RED, LOW);
+      delay(ltime);
+    }
+    if (colorSeq[i] == yel){
+      digitalWrite (LED_YEL, HIGH);
+      digitalWrite (REL_YEL, HIGH);
+      delay(ltime);
+      digitalWrite (LED_YEL, LOW);
+      digitalWrite (REL_YEL, LOW);
+      delay(ltime);
+    }
+    if (colorSeq[i] == grn){
+      digitalWrite (LED_GRN, HIGH);
+      digitalWrite (REL_GRN, HIGH);
+      delay(ltime);
+      digitalWrite (LED_GRN, LOW);
+      digitalWrite (REL_GRN, LOW);
+      delay(ltime);
+    }
   }
 }
+
+// void blinkLights(int color) {
+//   delay(500);
+//   if (color == red){
+//     digitalWrite (LED_RED, HIGH);
+//     digitalWrite (REL_RED, HIGH);
+//     delay(500);
+//     digitalWrite (LED_RED, LOW);
+//     digitalWrite (REL_RED, LOW);
+//     delay(500);
+//   }
+//   if (color == yel){
+//     digitalWrite (LED_YEL, HIGH);
+//     digitalWrite (REL_YEL, HIGH);
+//     delay(500);
+//     digitalWrite (LED_YEL, LOW);
+//     digitalWrite (REL_YEL, LOW);
+//     delay(500);
+//   }
+//   if (color == grn){
+//     digitalWrite (LED_GRN, HIGH);
+//     digitalWrite (REL_GRN, HIGH);
+//     delay(500);
+//     digitalWrite (LED_GRN, LOW);
+//     digitalWrite (REL_GRN, LOW);
+//     delay(500);
+//   }
+// }
