@@ -53,16 +53,36 @@ void loop() {
 
   int stopGame = 0;
 
+  // The whole game!  As long as you're stilling playing, this loops
   while (gameOn) {
-    int gameSeq = generateSeq();
-    blinkLights(gameSeq);
-    stopGame = digitalRead(BUTT_RED) + digitalRead(BUTT_GRN) + digitalRead(BUTT_YEL);
-    if (stopGame < 3) gameOn = 0;
-    if (!gameOn) gameOverSeq();
+    int gameSeq = generateSeq();      // generates the blinking light sequency
+    blinkLights(gameSeq);             // blinks the lights in sequence
+
+    int buttonPushed = 0;
+    long startTime = millis();
+    while ( (millis() - startTime < 3000) && (buttonPushed == 0) ) {
+      buttonPushed = checkButt();     // waits for button press, gives the player 3 seconds
+    }
+
+    if (buttonPushed == gameSeq){     // indicates you won the game
+      gameWonSeq();
+    }
+    else {                            // indicates you lost the game
+      gameLostSeq();                  // catches both wrong button press or no button pressed & timeout
+    }
+
+    gameOn = 0;
+
   }
 
   delay (100);
+}
 
+int checkButt() {
+  if (digitalRead(BUTT_RED) == 0) return red;
+  if (digitalRead(BUTT_GRN) == 0) return grn;
+  if (digitalRead(BUTT_YEL) == 0) return yel;
+  return 0;
 }
 
 int generateSeq(void) {
@@ -91,16 +111,30 @@ void onSequence(void) {
   delay (1000);
 }
 
-void gameOverSeq(void) {
-  digitalWrite (REL_RED, HIGH);
+void gameLostSeq(void) {
   delay (500);
-  digitalWrite (REL_YEL, HIGH);
-  delay (500);
-  digitalWrite (REL_GRN, HIGH);
-  delay (3000);
-  digitalWrite (REL_RED, LOW);
-  digitalWrite (REL_GRN, LOW);
-  digitalWrite (REL_YEL, LOW);
+  int i = 0;
+  for (i = 0; i < 3; i++) {
+    digitalWrite (REL_RED, HIGH);
+    digitalWrite (LED_RED, HIGH);
+    delay (500);
+    digitalWrite (REL_RED, LOW);
+    digitalWrite (LED_RED, LOW);
+    delay (500);
+  }
+}
+
+void gameWonSeq(void) {
+  delay(500);
+  int i = 0;
+  for (i = 0; i < 3; i++) {
+    digitalWrite (REL_GRN, HIGH);
+    digitalWrite (LED_GRN, HIGH);
+    delay (500);
+    digitalWrite (REL_GRN, LOW);
+    digitalWrite (LED_GRN, LOW);
+    delay (500);
+  }
 }
 
 void blinkLights(int color) {
