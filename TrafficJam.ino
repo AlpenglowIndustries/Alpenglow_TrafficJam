@@ -10,6 +10,10 @@
 #define REL_YEL 6
 #define REL_GRN 5
 
+int red = BUTT_RED;
+int yel = BUTT_YEL;
+int grn = BUTT_GRN;
+
 int relRedState = LOW;         // the current state of the output pin
 int relYelState = LOW;         // the current state of the output pin
 int relGrnState = LOW;         // the current state of the output pin
@@ -50,7 +54,9 @@ void loop() {
   int stopGame = 0;
 
   while (gameOn) {
-    onSequence();
+    blinkLights(red);
+    blinkLights(yel);
+    blinkLights(grn);
     stopGame = digitalRead(BUTT_RED) + digitalRead(BUTT_GRN) + digitalRead(BUTT_YEL);
     Serial.println(stopGame);
     if (stopGame < 3) gameOn = 0;
@@ -61,7 +67,9 @@ void loop() {
 
 }
 
-void gameSeq(void) {
+void gameSeq() {
+
+
   // write a sequence of 4 blinks, using all colors, in any order
 }
 
@@ -95,4 +103,31 @@ void gameOverSeq(void) {
   digitalWrite (REL_RED, LOW);
   digitalWrite (REL_GRN, LOW);
   digitalWrite (REL_YEL, LOW);
+}
+
+void blinkLights(int color) {
+  if (color == red){
+    digitalWrite (LED_RED, HIGH);
+    digitalWrite (REL_RED, HIGH);
+    delay(500);
+    digitalWrite (LED_RED, LOW);
+    digitalWrite (REL_RED, LOW);
+    delay(500);
+  }
+  if (color == yel){
+    digitalWrite (LED_YEL, HIGH);
+    digitalWrite (REL_YEL, HIGH);
+    delay(500);
+    digitalWrite (LED_YEL, LOW);
+    digitalWrite (REL_YEL, LOW);
+    delay(500);
+  }
+  if (color == grn){
+    digitalWrite (LED_GRN, HIGH);
+    digitalWrite (REL_GRN, HIGH);
+    delay(500);
+    digitalWrite (LED_GRN, LOW);
+    digitalWrite (REL_GRN, LOW);
+    delay(500);
+  }
 }
