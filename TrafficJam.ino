@@ -74,7 +74,7 @@ void loop() {
       while ( (millis() - startTime < 3000) && (buttonPushed == 0) ) {
         buttonPushed = checkButt();     // waits for button press, gives the player 3 seconds
       }
-      illuminate(buttonPushed);
+      illuminate(buttonPushed, 300);
       // Serial.print("button pushed = ");
       // Serial.println(buttonPushed);
       // Serial.print("color seq = ");
@@ -99,21 +99,27 @@ void loop() {
   delay (100);
 }
 
-void illuminate(int color) {
+void illuminate(int color, int lightTime) {
   if (color == red){
     digitalWrite(REL_RED, HIGH);
-    delay (300);
+    digitalWrite(LED_RED, HIGH);
+    delay (lightTime);
     digitalWrite(REL_RED, LOW);
+    digitalWrite(LED_RED, LOW);
   }
   if (color == grn){
     digitalWrite(REL_GRN, HIGH);
-    delay (300);
+    digitalWrite(LED_GRN, HIGH);
+    delay (lightTime);
     digitalWrite(REL_GRN, LOW);
+    digitalWrite(LED_GRN, LOW);
   }
   if (color == yel){
     digitalWrite(REL_YEL, HIGH);
-    delay (300);
+    digitalWrite(LED_YEL, HIGH);
+    delay (lightTime);
     digitalWrite(REL_YEL, LOW);
+    digitalWrite(LED_YEL, LOW);
     }
 }
 
@@ -153,12 +159,9 @@ void gameLostSeq(void) {
   delay (500);
   int i = 0;
   for (i = 0; i < 3; i++) {
-    digitalWrite (REL_RED, HIGH);
-    digitalWrite (LED_RED, HIGH);
+    illuminate (red, 500);
     delay (500);
-    digitalWrite (REL_RED, LOW);
-    digitalWrite (LED_RED, LOW);
-    delay (500);
+
   }
 }
 
@@ -166,11 +169,7 @@ void gameWonSeq(void) {
   delay(500);
   int i = 0;
   for (i = 0; i < 3; i++) {
-    digitalWrite (REL_GRN, HIGH);
-    digitalWrite (LED_GRN, HIGH);
-    delay (500);
-    digitalWrite (REL_GRN, LOW);
-    digitalWrite (LED_GRN, LOW);
+    illuminate (grn, 500);
     delay (500);
   }
 }
