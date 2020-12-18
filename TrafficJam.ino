@@ -84,13 +84,19 @@ void loop() {
           buttonPushed = checkButt();     // waits for button press, gives the player 3 seconds
         }
 
+        long buttTime = millis();
         if (buttonPushed) {
           illuminate(buttonPushed);       // illuminates button & traffic lights for as long as button is pressed
           delay (50);                     // waits for bouncing to stop
-          while (checkButt());
+          while (checkButt() && (millis() - buttTime < 3000)); // checks to see if button has been pressed for longer than 3 seconds
           deluminate(buttonPushed);
           delay (50);                     // in case of bounce on release
+          if (millis() - buttTime >= 3050){   // if button has been pressed for 3 or more seconds YOU LOSE
+            gameResult = LOST;
+            break;
+          }  
         }
+
 
         if (buttonPushed == gameSeq[i]) {
   //        delay (500);  // need to give the player time to unpress the button
