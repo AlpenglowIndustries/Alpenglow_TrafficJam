@@ -72,9 +72,10 @@ void loop() {
 
     int i = 0;
     int currentLoop = 1;
+    int lightDelay = 500;
     while ( (currentLoop <= lenGameSeq) && (gameResult == WON) ){
 
-      blinkLights(gameSeq, currentLoop, 500);  // blinks lights up to the current loop
+      blinkLights(gameSeq, currentLoop, lightDelay);  // blinks lights up to the current loop
 
       for (i = 0; i < currentLoop; i++) {
         // detect the sequence up to the current loop
@@ -109,6 +110,7 @@ void loop() {
       }
 
       currentLoop++;
+      lightDelay = lightDelay - 25;
     }
 
     if (gameResult == WON) gameWonSeq();
