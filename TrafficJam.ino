@@ -24,7 +24,7 @@ int relGrnState = LOW;         // the current state of the output pin
 
 int ltime = 500;               // initial time lights are on and off
 
-int gameSeq[5] = {0};
+int gameSeq[10] = {0};
 
 // the setup function runs once when you press reset or power the board
 void setup() {
@@ -45,6 +45,7 @@ void setup() {
 
   onSequence();
 
+  randomSeed(analogRead(0));
   Serial.begin(9600);
 
 }
@@ -64,9 +65,9 @@ void loop() {
   // The whole game!  As long as you're stilling playing, this loops
   while (gameOn) {
   //  int gameSeq[] = {red, yel, grn, yel, red};          // generates the blinking light sequence
-    generateSeq();
-    int lenGameSeq = sizeof(gameSeq) / sizeof(gameSeq[0]);
 
+    int lenGameSeq = sizeof(gameSeq) / sizeof(gameSeq[0]);
+    generateSeq(lenGameSeq);
     int gameResult = WON;       // as long as gameResult is WON, the game keeps playing
 
     int i = 0;
@@ -94,12 +95,10 @@ void loop() {
           if (millis() - buttTime >= 3050){   // if button has been pressed for 3 or more seconds YOU LOSE
             gameResult = LOST;
             break;
-          }  
+          }
         }
 
-
         if (buttonPushed == gameSeq[i]) {
-  //        delay (500);  // need to give the player time to unpress the button
             // if the correct button was pushed do nothing, continue checking buttons
         }
         else {
@@ -189,15 +188,18 @@ int checkButt() {
   return 0;
 }
 
-void generateSeq(void) {
+void generateSeq(int lenSeq) {
 
-//  gameSeq[] = {red, yel, grn, yel, red};
-  gameSeq[0] = red;
-  gameSeq[1] = yel;
-  gameSeq[2] = grn;
-  gameSeq[3] = yel;
-  gameSeq[4] = red;
-  // write a sequence of 4 blinks, using all colors, in any order
+  int i = 0;
+  for (i = 0; i < lenSeq; i++){
+    gameSeq[i] = random()%3 + 1;
+  }
+
+  // gameSeq[0] = red;
+  // gameSeq[1] = yel;
+  // gameSeq[2] = grn;
+  // gameSeq[3] = yel;
+  // gameSeq[4] = red;
 }
 
 void onSequence(void) {
