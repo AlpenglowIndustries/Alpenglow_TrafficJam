@@ -34,8 +34,7 @@ int gameSeq[10] = {0};
 
 // the setup function runs once when you press reset or power the board
 void setup() {
-  // initialize digital pin LED_BUILTIN as an output.
-
+  
   pinMode(LED_RED, OUTPUT);
   pinMode (LED_YEL, OUTPUT);
   pinMode (LED_GRN, OUTPUT);
@@ -57,7 +56,6 @@ void setup() {
 
   randomSeed(analogRead(0));
   Serial.begin(9600);
-
 }
 
 // the loop function runs over and over again forever
@@ -66,6 +64,7 @@ void setup() {
 void loop() {
   lightMode = digitalRead (MODE_SW);
 
+  // operates lights in Mood Light or Game mode
   switch (lightMode) {
     case 0: // MOOD LIGHT - button presses turn lights on and off
     {
